@@ -1,0 +1,43 @@
+"ช่วยเขียนโปรเจกต์ Wordle ด้วย Vue 3 (Composition API) + TypeScript + Tailwind CSS โดยเน้นสถาปัตยกรรมแบบ Clean Code และมีรายละเอียดดังนี้:
+
+1. Data & Library Setup:
+
+ใช้ Library an-array-of-english-words หรือไฟล์ JSON คำศัพท์ภาษาอังกฤษ
+
+Performance Optimization: ให้กรอง (Filter) เฉพาะคำที่มี 5 ตัวอักษรเก็บไว้ในค่าคงที่ (Constant) นอกฟังก์ชันคอมโพเนนต์ เพื่อป้องกันการโหลดใหม่เมื่อ Re-render
+
+สร้างฟังก์ชัน isWordValid(word: string): boolean สำหรับเช็คคำใน List แบบ Synchronous
+
+2. Game Logic & State:
+
+จัดการ State ด้วย reactive สำหรับกระดาน 6x5 และ ref สำหรับคำตอบ (Target Word)
+
+เมื่อกด Enter: ตรวจคำตอบตามเงื่อนไข Green/Yellow/Gray (รองรับกรณีคำมีตัวอักษรซ้ำ)
+
+Shake Animation: หากคำไม่อยู่ใน List ให้ Apply CSS Class สำหรับการสั่น (Shake) ที่แถวปัจจุบัน
+
+3. Keyboard & Responsive UI:
+
+Keyboard Component: ออกแบบ Virtual Keyboard ให้มีการจัดวางแบบ QWERTY แบ่งเป็น 3 แถว ใช้ flex-grow เพื่อให้ปุ่มขยายเต็มหน้าจอในทุก Device (Mobile/Desktop)
+
+ตัวปุ่ม Keyboard ต้องเปลี่ยนสี (Green/Yellow/Dark-Gray) ตามสถานะตัวอักษรที่ทายไปแล้ว
+
+รองรับ Event Listener สำหรับการพิมพ์ผ่าน Physical Keyboard ของ Laptop ด้วย
+
+4. Persistent Data (Local Storage):
+
+มีระบบบันทึก GameState (คำที่ทายไปแล้ว) เพื่อให้ User รีเฟรชหน้าจอแล้วเล่นต่อได้
+
+เก็บ Statistics (Win Rate, Current Streak, Max Streak) ใน localStorage
+
+5. Animations & Effects:
+
+ใช้ CSS Transitions/Animations สำหรับการ Flip แผ่นตัวอักษรเมื่อกดยืนยันคำ
+
+ใช้ Vue <Transition> สำหรับแสดง Result Modal เมื่อเกมจบ
+
+6. Component Structure:
+
+แยก Logic ออกเป็น Composable (เช่น useGameState.ts)
+
+แยก UI เป็น WordGrid.vue, KeyBoard.vue, และ StatsModal.vue"
