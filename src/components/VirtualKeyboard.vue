@@ -17,23 +17,40 @@ const keys = [
 
 const getKeyClass = (key: string) => {
   const status = props.letterStatuses[key];
+  const isFunctionKey = key === "ENTER" || key === "BACKSPACE";
+
+  // Base styles: responsive height, font size, and transitions
   const base =
-    "flex items-center justify-center rounded font-bold uppercase cursor-pointer select-none transition-colors duration-150 h-14 text-sm sm:text-base";
+    "flex items-center justify-center rounded font-bold uppercase cursor-pointer select-none transition-colors duration-150 h-12 sm:h-14 text-sm sm:text-base";
 
-  if (key === "ENTER" || key === "BACKSPACE") {
-    return `${base} px-3 sm:px-4 bg-gray-200 hover:bg-gray-300 dark:bg-gray-600 dark:hover:bg-gray-500 text-black dark:text-white`;
+  // Sizing: Function keys are 1.5x larger than standard keys to ensure alignment
+  // Row 1 (10 keys) = 10 units
+  // Row 3 (7 letters + 2 func) = 7 + (2 * 1.5) = 10 units
+  const sizeClass = isFunctionKey ? "flex-[1.5] text-xs sm:text-sm" : "flex-1";
+
+  let colorClass = "";
+  if (isFunctionKey) {
+    colorClass =
+      "bg-gray-200 hover:bg-gray-300 dark:bg-gray-600 dark:hover:bg-gray-500 text-black dark:text-white";
+  } else {
+    switch (status) {
+      case "correct":
+        colorClass = "bg-green-500 hover:bg-green-600 text-white";
+        break;
+      case "present":
+        colorClass = "bg-yellow-500 hover:bg-yellow-600 text-white";
+        break;
+      case "absent":
+        colorClass = "bg-red-400 hover:bg-red-600 text-white";
+        break;
+      default:
+        colorClass =
+          "bg-gray-200 hover:bg-gray-300 dark:bg-gray-600 dark:hover:bg-gray-500 text-black dark:text-white";
+        break;
+    }
   }
 
-  switch (status) {
-    case "correct":
-      return `${base} flex-1 bg-green-500 hover:bg-green-600 text-white`;
-    case "present":
-      return `${base} flex-1 bg-yellow-500 hover:bg-yellow-600 text-white`;
-    case "absent":
-      return `${base} flex-1 bg-gray-500 hover:bg-gray-600 text-white`;
-    default:
-      return `${base} flex-1 bg-gray-200 hover:bg-gray-300 dark:bg-gray-600 dark:hover:bg-gray-500 text-black dark:text-white`;
-  }
+  return `${base} ${sizeClass} ${colorClass}`;
 };
 </script>
 
@@ -42,7 +59,7 @@ const getKeyClass = (key: string) => {
     <div
       v-for="(row, i) in keys"
       :key="i"
-      class="flex w-full gap-1.5 mb-2 justify-center"
+      class="flex w-full gap-1 sm:gap-1.5 mb-2 justify-center"
     >
       <div
         v-for="key in row"
@@ -53,7 +70,7 @@ const getKeyClass = (key: string) => {
         <template v-if="key === 'BACKSPACE'">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="h-6 w-6"
+            class="h-5 w-5 sm:h-6 sm:w-6"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
