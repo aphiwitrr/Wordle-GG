@@ -23,6 +23,11 @@ const emit = defineEmits<{
     <div
       class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 max-w-sm w-full transform transition-all scale-100"
     >
+      <div class="top-2 right-4 absolute">
+        <button @click="emit('close')" class="text-red-500 dark:text-red-400">
+          X
+        </button>
+      </div>
       <h2 class="text-2xl font-bold text-center mb-4 dark:text-white">
         {{ gameStatus === "won" ? "You Won!" : "Game Over" }}
       </h2>
