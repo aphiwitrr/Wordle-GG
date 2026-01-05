@@ -91,10 +91,7 @@ const handlePlayAgain = () => {
     </main>
 
     <!-- Keyboard -->
-    <VirtualKeyboard
-      :letter-statuses="letterStatuses"
-      @key="handleKey"
-    />
+    <VirtualKeyboard :letter-statuses="letterStatuses" @key="handleKey" />
 
     <!-- Modal -->
     <ResultModal
@@ -103,6 +100,8 @@ const handlePlayAgain = () => {
       :solution="gameState.solution"
       :statistics="statistics"
       :guess-count="gameState.rowIndex + 1"
+      :score="gameState.score"
+      :time-taken="gameState.timeTaken"
       @close="showModal = false"
       @play-again="handlePlayAgain"
     />

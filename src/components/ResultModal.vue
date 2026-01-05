@@ -7,12 +7,20 @@ defineProps<{
   solution: string;
   statistics: Statistics;
   guessCount: number;
+  score?: number;
+  timeTaken?: number;
 }>();
 
 const emit = defineEmits<{
   (e: "close"): void;
   (e: "playAgain"): void;
 }>();
+
+const formatTime = (seconds: number) => {
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  return `${m}:${s.toString().padStart(2, "0")}`;
+};
 </script>
 
 <template>
@@ -57,15 +65,15 @@ const emit = defineEmits<{
         </div>
         <div>
           <div class="text-2xl font-bold dark:text-white">
-            {{ statistics.currentStreak }}
+            {{ score !== undefined ? score : "-" }}
           </div>
-          <div class="text-xs text-gray-500 dark:text-gray-400">Streak</div>
+          <div class="text-xs text-gray-500 dark:text-gray-400">Score</div>
         </div>
         <div>
           <div class="text-2xl font-bold dark:text-white">
-            {{ statistics.maxStreak }}
+            {{ timeTaken !== undefined ? formatTime(timeTaken) : "-" }}
           </div>
-          <div class="text-xs text-gray-500 dark:text-gray-400">Max</div>
+          <div class="text-xs text-gray-500 dark:text-gray-400">Time</div>
         </div>
       </div>
 

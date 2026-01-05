@@ -11,6 +11,8 @@ export interface GameState {
   solution: string;
   status: "playing" | "won" | "lost";
   rowIndex: number;
+  score?: number;
+  timeTaken?: number;
 }
 
 export interface Statistics {
